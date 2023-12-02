@@ -25,37 +25,28 @@ func main() {
 	var idSum int
 	for fileScanner.Scan() {
 		gameData := strings.Split(fileScanner.Text(), ":")
-		gameId, _ := strconv.Atoi(strings.Split(gameData[0], " ")[1])
-		trials := strings.Split(gameData[1], ";")
-		failed := false
-		for _, trial := range trials {
-			if failedTrial(trial) {
-				failed = true
-				break
-			}
-		}
-		if !failed {
-			idSum += gameId
-		}
+		trials := strings.ReplaceAll(gameData[1], ";", "")
+		trials = strings.ReplaceAll(trials, ",", "")[1:]
+		minCounts := minCubeCounts(trials)
+		idSum += minCounts["red"] * minCounts["green"] * minCounts["blue"]
 	}
 	fmt.Printf("Value: %d\n", idSum)
 }
 
-func failedTrial(trial string) bool {
-	limits := map[string]int{
-		"red":   12,
-		"green": 13,
-		"blue":  14,
+func minCubeCounts(gameData string) map[string]int {
+	data := strings.Split(gameData, " ")
+	highest := map[string]int{
+		"red":   0,
+		"green": 0,
+		"blue":  0,
 	}
-	trial = strings.ReplaceAll(trial, ",", "")
-	data := strings.Split(trial, " ")[1:]
 	for i := 0; i < len(data)/2; i++ {
 		actualIdx := i * 2
 		value, _ := strconv.Atoi(data[actualIdx])
 		colour := data[actualIdx+1]
-		if value > limits[colour] {
-			return true
+		if highest[colour] < value {
+			highest[colour] = value
 		}
 	}
-	return false
+	return highest
 }
