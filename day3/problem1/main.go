@@ -51,13 +51,11 @@ func findPartNumbers(line string, nextLineRunes []rune, prevLineRunes []rune) in
 	lineRunes := []rune(line)
 	var sum int
 	idx := 0
-	log.Println(line)
 	for {
 		if idx == 0 {
 			idx++
 			continue
 		} else if idx >= len(lineRunes)-1 {
-			log.Println(sum)
 			return sum
 		}
 		if unicode.IsNumber(lineRunes[idx]) {
