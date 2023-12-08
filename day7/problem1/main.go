@@ -51,7 +51,6 @@ func main() {
 	c := make(chan []hand)
 	go sortHands(hands, c)
 	sortedHands := <-c
-	log.Println("Sorted hands:", sortedHands)
 
 	for idx, h := range sortedHands {
 		output += h.bidValue * (idx + 1)
