@@ -81,7 +81,7 @@ func navigate(position []int, pipeMap [][]rune, heading string) ([]int, string) 
 			if pathEast(firstRune, pipeMap, position, heading) {
 				return []int{position[0], position[1] + 1}, headingEast
 			}
-		} else if position[1] == len(pipeMap)-1 {
+		} else if position[1] == len(pipeMap[0])-1 {
 			// look around top right
 			if pathWest(firstRune, pipeMap, position, heading) {
 				return []int{position[0], position[1] - 1}, headingWest
@@ -94,7 +94,7 @@ func navigate(position []int, pipeMap [][]rune, heading string) ([]int, string) 
 				return []int{position[0], position[1] - 1}, headingWest
 			}
 		}
-	} else if position[0] == len(pipeMap[0])-1 {
+	} else if position[0] == len(pipeMap)-1 {
 		// look around bottom
 		if pathNorth(firstRune, pipeMap, position, heading) {
 			return []int{position[0] - 1, position[1]}, headingNorth
@@ -104,7 +104,7 @@ func navigate(position []int, pipeMap [][]rune, heading string) ([]int, string) 
 			if pathEast(firstRune, pipeMap, position, heading) {
 				return []int{position[0], position[1] + 1}, headingEast
 			}
-		} else if position[1] == len(pipeMap)-1 {
+		} else if position[1] == len(pipeMap[0])-1 {
 			// look around bottom right
 			if pathWest(firstRune, pipeMap, position, heading) {
 				return []int{position[0], position[1] - 1}, headingWest
@@ -126,7 +126,7 @@ func navigate(position []int, pipeMap [][]rune, heading string) ([]int, string) 
 		} else if pathSouth(firstRune, pipeMap, position, heading) {
 			return []int{position[0] + 1, position[1]}, headingSouth
 		}
-	} else if position[1] == len(pipeMap)-1 {
+	} else if position[1] == len(pipeMap[0])-1 {
 		// look around right edge
 		if pathWest(firstRune, pipeMap, position, heading) {
 			return []int{position[0], position[1] - 1}, headingWest
@@ -154,8 +154,8 @@ func pathWest(first rune, pipeMap [][]rune, position []int, heading string) bool
 	if heading == headingEast {
 		return false
 	}
-	second := pipeMap[position[0]][position[1]-1]
 	if first == horizontal || first == nintyDegBendNW || first == nintyDegBendSW || first == startingPosition {
+		second := pipeMap[position[0]][position[1]-1]
 		if second == horizontal || second == nintyDegBendNE || second == nintyDegBendSE || second == startingPosition {
 			return true
 		}
@@ -167,8 +167,8 @@ func pathEast(first rune, pipeMap [][]rune, position []int, heading string) bool
 	if heading == headingWest {
 		return false
 	}
-	second := pipeMap[position[0]][position[1]+1]
 	if first == horizontal || first == nintyDegBendNE || first == nintyDegBendSE || first == startingPosition {
+		second := pipeMap[position[0]][position[1]+1]
 		if second == horizontal || second == nintyDegBendNW || second == nintyDegBendSW || second == startingPosition {
 			return true
 		}
@@ -180,8 +180,8 @@ func pathNorth(first rune, pipeMap [][]rune, position []int, heading string) boo
 	if heading == headingSouth {
 		return false
 	}
-	second := pipeMap[position[0]-1][position[1]]
 	if first == vertical || first == nintyDegBendNE || first == nintyDegBendNW || first == startingPosition {
+		second := pipeMap[position[0]-1][position[1]]
 		if second == vertical || second == nintyDegBendSW || second == nintyDegBendSE || second == startingPosition {
 			return true
 		}
@@ -193,8 +193,8 @@ func pathSouth(first rune, pipeMap [][]rune, position []int, heading string) boo
 	if heading == headingNorth {
 		return false
 	}
-	second := pipeMap[position[0]+1][position[1]]
 	if first == vertical || first == nintyDegBendSW || first == nintyDegBendSE || first == startingPosition {
+		second := pipeMap[position[0]+1][position[1]]
 		if second == vertical || second == nintyDegBendNE || second == nintyDegBendNW || second == startingPosition {
 			return true
 		}
